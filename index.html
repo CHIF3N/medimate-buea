@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>MediMate — safe medicine in Buea</title>
+    <meta name="description" content="Safe medicine from purchase to the last dose. Ask in English, French or Pidgin, find medicine in stock, check if a pack is genuine, and finish every course. Works offline." />
+    <meta name="theme-color" content="#5b3fe8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="MediMate" />
+    <meta property="og:title" content="MediMate — safe medicine in Buea" />
+    <meta property="og:description" content="Ask in Pidgin, French or English. Find stock, check packs, finish every course. Offline-first prototype by Team Medimates." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <script>
+      // Apply the saved theme before first paint (no flash).
+      try {
+        var s = JSON.parse(localStorage.getItem('medimate.v2') || '{}');
+        var dark = s.theme === 'dark' || (s.theme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+        if (s.lang) document.documentElement.lang = s.lang === 'pcm' ? 'en' : s.lang;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>MediMate needs JavaScript to run.</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
