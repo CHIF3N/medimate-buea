@@ -39,6 +39,7 @@ const S = {
   scan: t('Scan the box', 'Scanner la boîte', 'Scan di box'),
   scanSub: t('Point at the square code or barcode', 'Visez le code carré ou le code-barres', 'Point am for di square code or barcode'),
   photo: t('Take a photo of the box', 'Photographier la boîte', 'Snap di box'),
+  photoShort: t('Take a photo', 'Prendre une photo', 'Snap am'),
   other: t('No code on the box? Type it instead', 'Pas de code ? Saisissez-le', 'No code for box? Type am'),
   typeHelp: t('Type the code printed after “LOT” or “BATCH” — usually near the expiry date.', 'Saisissez le code imprimé après « LOT » — souvent près de la date de péremption.', 'Type di code wey dey after “LOT” or “BATCH” — e dey near di expiry date.'),
   lotPlaceholder: t('e.g. DEMO-AMX-9999', 'ex. DEMO-AMX-9999', 'like DEMO-AMX-9999'),
@@ -212,7 +213,7 @@ export default function VerifyScreen() {
           </button>
           <div className="mt-2.5 grid grid-cols-2 gap-2">
             <button onClick={() => (haptic(), fileRef.current?.click())} disabled={ocrBusy} className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-surface text-[13px] font-semibold text-ink ring-1 ring-line active:scale-[0.97]">
-              {ocrBusy ? <Spinner /> : <Camera className="size-4 text-brand-600" />} {L(S.photo).split(' ').slice(0, 2).join(' ')}
+              {ocrBusy ? <Spinner /> : <Camera className="size-4 text-brand-600" />} {L(S.photoShort)}
             </button>
             <button onClick={() => (haptic(), setTyping((x) => !x))} className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-surface text-[13px] font-semibold text-ink ring-1 ring-line active:scale-[0.97]">
               <Keyboard className="size-4 text-brand-600" /> {L(S.typeCode)}
