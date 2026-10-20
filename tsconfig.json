@@ -6,7 +6,8 @@
     "module": "ESNext",
     "types": [
       "vite/client",
-      "node"
+      "node",
+      "vite-plugin-pwa/client"
     ],
     "lib": [
       "ES2022",
