@@ -199,8 +199,8 @@
   .display {
     font-family: var(--font-display);
     font-weight: 800;
-    letter-spacing: -0.035em;
-    line-height: 1.05;
+    letter-spacing: -0.025em;
+    line-height: 1.06;
   }
   .display em {
     font-style: normal;

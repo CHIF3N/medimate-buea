@@ -32,13 +32,12 @@ export default function App() {
   const { path } = useLocation();
   const theme = useStore((s) => s.theme);
   const lang = useStore((s) => s.lang);
-  const systemDark = useMedia('(prefers-color-scheme: dark)');
 
   useEffect(() => {
-    const dark = theme === 'dark' || (theme === 'system' && systemDark);
+    const dark = theme === 'dark';
     document.documentElement.classList.toggle('dark', dark);
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0b0c10' : '#f8f7ff');
-  }, [theme, systemDark]);
+  }, [theme]);
 
   useEffect(() => {
     document.documentElement.lang = lang === 'fr' ? 'fr' : 'en';

@@ -66,13 +66,12 @@ export default function SettingsSheet({ open, onClose, onUssd }: { open: boolean
         </div>
         <div>
           <p className="mb-2 text-[13px] font-semibold text-ink-2">{L(S.theme)}</p>
-          <Segmented<'system' | 'light' | 'dark'>
-            value={theme}
+          <Segmented<'light' | 'dark'>
+            value={theme === 'dark' ? 'dark' : 'light'}
             onChange={(v) => setState({ theme: v })}
             options={[
               { value: 'light', label: L(S.light) },
               { value: 'dark', label: L(S.dark) },
-              { value: 'system', label: L(S.system) },
             ]}
           />
         </div>

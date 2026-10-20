@@ -20,7 +20,7 @@
       // Apply the saved theme before first paint (no flash).
       try {
         var s = JSON.parse(localStorage.getItem('medimate.v2') || '{}');
-        var dark = s.theme === 'dark' || (s.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        var dark = s.theme === 'dark';
         if (dark) document.documentElement.classList.add('dark');
         if (s.lang) document.documentElement.lang = s.lang === 'pcm' ? 'en' : s.lang;
       } catch (e) {}
