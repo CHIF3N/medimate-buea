@@ -1,5 +1,7 @@
 # MediMate — safe medicine, from purchase to the last dose
 
+**Live:** https://medimate-buea.vercel.app · open it on a laptop to see the phone frame, QR code and live engine console.
+
 Offline-first medicine companion for Buea, Cameroon. Built by **Team Medimates** for the She Innovates Hackathon 2026.
 
 - **Ask** in English, French or Cameroonian Pidgin. An on-device, explainable answer engine (no generative AI) understands slang and typos, flags danger signs first, never gives doses for prescription-only medicines, and asks tap-to-answer follow-up questions ("Who is it for?", "Did a test confirm malaria?").
