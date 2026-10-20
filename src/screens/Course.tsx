@@ -26,9 +26,12 @@ import { askPermission, notify } from '../lib/reminders';
 import { Sheet, useToast } from '../ui/overlay';
 import { Button, cx, haptic, ProgressRing, ScreenHeader, Segmented, Toggle } from '../ui/primitives';
 import ParasiteChart from '../ui/ParasiteChart';
+import CarePlanView from './CarePlan';
 
 const S = {
   eyebrow: t('Adherence', 'Observance', 'Finish your medicine'),
+  tabCourses: t('Short treatments', 'Traitements courts', 'Short treatment'),
+  tabCare: t('Long-term care', 'Soins au long cours', 'Long-time care'),
   title: t('Your', 'Votre', 'Your'),
   accent: t('treatment', 'traitement', 'treatment'),
   sub: t('MediMate times every dose. The amount always comes from your prescription.', 'MediMate rappelle chaque prise. La quantité vient toujours de votre ordonnance.', 'MediMate go remind you every dose. How much to take na from your doctor paper.'),
@@ -109,8 +112,11 @@ export default function CourseScreen() {
   const courses = useStore((s) => s.courses);
   const [adding, setAdding] = useState<string | null>(null);
   const [why, setWhy] = useState<Course | null>(null);
+  const hasCare = useStore((s) => Boolean(s.care));
+  const [view, setView] = useState<'courses' | 'care'>(() => (query.get('view') === 'care' ? 'care' : 'courses'));
 
   useEffect(() => {
+    if (query.get('view') === 'care') setView('care');
     const add = query.get('add');
     if (add !== null) {
       setAdding(add);
@@ -125,6 +131,21 @@ export default function CourseScreen() {
   return (
     <div className="space-y-4 pb-4">
       <ScreenHeader eyebrow={L(S.eyebrow)} title={L(S.title)} accent={L(S.accent)} sub={L(S.sub)} />
+      <div className="px-4">
+        <Segmented<'courses' | 'care'>
+          value={view}
+          onChange={setView}
+          options={[
+            { value: 'courses', label: L(S.tabCourses) },
+            { value: 'care', label: `${L(S.tabCare)}${hasCare ? ' ●' : ''}` },
+          ]}
+        />
+      </div>
+      {view === 'care' ? (
+        <div className="px-4">
+          <CarePlanView />
+        </div>
+      ) : (
       <div className="space-y-4 px-4">
         {active.length === 0 && (
           <div className="card flex flex-col items-center px-6 py-8 text-center">
@@ -172,6 +193,7 @@ export default function CourseScreen() {
           </section>
         )}
       </div>
+      )}
 
       <AddSheet medId={adding} onClose={() => setAdding(null)} />
       <Sheet open={Boolean(why)} onClose={() => setWhy(null)} title={L(S.why)}>

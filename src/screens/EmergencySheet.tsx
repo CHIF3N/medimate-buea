@@ -76,7 +76,7 @@ export default function EmergencySheet({ open, onClose }: { open: boolean; onClo
                     {h.emergency ? ` · ${L(S.er)}` : ''}
                   </span>
                 </span>
-                <span className="grid size-9 place-items-center rounded-full bg-ink text-bg">
+                <span className="grid size-9 place-items-center rounded-full bg-brand-600 text-white">
                   <Navigation className="size-4" />
                 </span>
               </a>

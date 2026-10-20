@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft, ArrowRight, Binary, Box, Check, Cloud, Code2, Cpu, Database, ExternalLink, FileWarning, Globe2, HandCoins, Hourglass, Languages, Lock, MapPinned, Pill, Search, ShieldCheck, Smartphone, Sparkles, Terminal, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Binary, Box, Check, Cloud, Code2, Cpu, Database, ExternalLink, FileWarning, Globe2, HandCoins, Hourglass, Languages, ListChecks, Lock, MapPinned, Pill, Search, ShieldCheck, Smartphone, Terminal, X } from 'lucide-react';
 import { t, useLang } from '../i18n';
 import { navigate } from '../lib/router';
 import { MEDICINES } from '../data/medicines';
@@ -135,7 +135,7 @@ export function WhyScreen() {
         <p className="mt-3 text-[15px] leading-relaxed text-ink-2">{L(W.intro)}</p>
       </section>
 
-      <section className="overflow-hidden rounded-[28px] bg-[#0f1016] p-5 text-white shadow-float">
+      <section className="overflow-hidden rounded-[28px] brand-gradient p-5 text-white shadow-float">
         <p className="text-[13px] text-white/60">{L(W.since)}</p>
         <div className="mt-3 grid grid-cols-2 gap-4">
           <Counter value={malaria} label={L(W.sinceMalaria)} tone="#f5a524" />
@@ -196,7 +196,7 @@ export function WhyScreen() {
       </section>
 
       <div className="grid grid-cols-2 gap-2">
-        <button onClick={() => navigate('/about')} className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-ink text-[14px] font-semibold text-bg active:scale-[0.97]">
+        <button onClick={() => navigate('/about')} className="flex h-12 items-center justify-center gap-2 rounded-2xl bg-brand-600 text-[14px] font-semibold text-white active:scale-[0.97]">
           <Cpu className="size-4" /> {L(W.cta)}
         </button>
         <button onClick={() => navigate('/ask')} className="brand-gradient flex h-12 items-center justify-center gap-2 rounded-2xl text-[14px] font-semibold text-white active:scale-[0.97]">
@@ -210,7 +210,7 @@ export function WhyScreen() {
 function Counter({ value, label, tone }: { value: number; label: string; tone: string }) {
   return (
     <div>
-      <p className="tnum font-mono text-[34px] font-semibold leading-none tracking-[-0.03em]" style={{ color: tone }}>
+      <p className="tnum font-mono text-[34px] font-semibold leading-none tracking-[-0.03em]" style={{ color: '#fff' }}>
         {value < 10 ? value.toFixed(1) : Math.floor(value).toLocaleString()}
       </p>
       <p className="mt-2 text-[12px] leading-snug text-white/75">{label}</p>
@@ -336,7 +336,7 @@ export default function AboutScreen() {
           <Metric value="<1 ms" label="per answer" />
           <Metric value="0 B" label="sent to a server" />
         </div>
-        <pre className="mt-3 overflow-x-auto rounded-2xl bg-[#0f1016] p-3.5 font-mono text-[11px] leading-relaxed text-white/85">
+        <pre className="mt-3 overflow-x-auto rounded-2xl bg-surface-2 p-3.5 font-mono text-[11px] leading-relaxed text-ink-2 ring-1 ring-line">
           {`input  "My pikin get hot body since two days,
         I fit give am Amox?"
 lang   pidgin (auto)
@@ -354,8 +354,8 @@ out    RED · ask: "Did a health worker prescribe it?"`}
           <ArchRow icon={Cloud} title="Vercel (static + serverless)" items={['/api/ussd — feature-phone menu', '/api/pay — Fapshi Mobile Money', '/api/fapshi-webhook — payment confirmation']} />
           <ArchRow icon={Database} title="Pilot backend" items={['Pharmacy stock & reservations', 'Email-link sign-in per pharmacy', 'Report queue to pharmacists']} />
         </div>
-        <div className="mt-3 rounded-2xl bg-[#0f1016] p-3.5">
-          <p className="flex items-center gap-1.5 text-[11.5px] font-semibold text-white/70">
+        <div className="mt-3 rounded-2xl bg-surface-2 p-3.5 ring-1 ring-line">
+          <p className="flex items-center gap-1.5 text-[11.5px] font-semibold text-muted">
             <Terminal className="size-3.5" /> {L(A.tryApi)}
           </p>
           <pre className="mt-2 overflow-x-auto font-mono text-[11px] leading-relaxed text-safe-ink">{`curl -X POST ${origin}/api/ussd \\
@@ -373,7 +373,7 @@ out    RED · ask: "Did a health worker prescribe it?"`}
         </ul>
       </Block>
 
-      <Block icon={Sparkles} title={L(A.real)}>
+      <Block icon={ListChecks} title={L(A.real)}>
         <div className="divide-y divide-line overflow-hidden rounded-2xl ring-1 ring-line">
           {REAL.map((r, i) => (
             <div key={i} className="flex items-center gap-3 px-3.5 py-2.5">

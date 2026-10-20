@@ -76,7 +76,7 @@ function SignIn() {
   return (
     <div className="space-y-4">
       <div className="px-1">
-        <span className="grid size-14 place-items-center rounded-3xl bg-ink text-bg">
+        <span className="grid size-14 place-items-center rounded-3xl bg-brand-600 text-white">
           <Store className="size-7" />
         </span>
         <h1 className="display mt-4 text-[40px] text-ink">{L(S.title)}</h1>
@@ -140,7 +140,7 @@ function Dashboard() {
 
   return (
     <div className="space-y-4">
-      <div className="relative overflow-hidden rounded-[28px] bg-ink p-5 text-bg">
+      <div className="relative overflow-hidden rounded-[28px] brand-gradient p-5 text-white">
         <div className="pointer-events-none absolute -right-12 -top-12 size-44 rounded-full bg-brand-500/40 blur-3xl" />
         <div className="relative flex items-start justify-between gap-3">
           <div>

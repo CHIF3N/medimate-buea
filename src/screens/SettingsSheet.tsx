@@ -70,9 +70,9 @@ export default function SettingsSheet({ open, onClose, onUssd }: { open: boolean
             value={theme}
             onChange={(v) => setState({ theme: v })}
             options={[
-              { value: 'system', label: L(S.system) },
               { value: 'light', label: L(S.light) },
               { value: 'dark', label: L(S.dark) },
+              { value: 'system', label: L(S.system) },
             ]}
           />
         </div>

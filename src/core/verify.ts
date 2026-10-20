@@ -116,7 +116,7 @@ export function verifyPack(input: string | PackCode, now = new Date()): VerifyRe
     checks.push({
       id: 'registry',
       status: 'fail',
-      title: t('Batch is on an alert list', 'Lot sous alerte', 'Dis batch dey for alert list'),
+      title: t('Fake boxes with this code were reported', 'Des faux avec ce code ont été signalés', 'People don report fake box wey get dis code'),
       detail: t(
         'Falsified packs carrying this batch number were reported (demo alert). Genuine stock from this batch was withdrawn.',
         'Des boîtes falsifiées portant ce numéro de lot ont été signalées (alerte démo). Le stock authentique a été retiré.',
@@ -127,16 +127,16 @@ export function verifyPack(input: string | PackCode, now = new Date()): VerifyRe
     checks.push({
       id: 'registry',
       status: 'pass',
-      title: t('Found in the registry', 'Trouvé dans le registre', 'E dey inside register'),
+      title: t('Matches the maker’s records', 'Conforme aux registres du fabricant', 'E match di maker record'),
       detail: { en: `${record.product} · ${record.pack} · ${record.maker}` },
     });
   } else {
     checks.push({
       id: 'registry',
       status: 'unknown',
-      title: t('Batch not found', 'Lot introuvable', 'We no see dis batch'),
+      title: t('Not in our records', 'Absent de nos registres', 'E no dey our record'),
       detail: t(
-        'This batch number is not in the MediMate demo registry. That does not prove the medicine is fake.',
+        'We don’t have this box in our (demo) records yet. That does not prove the medicine is fake.',
         'Ce numéro de lot n’est pas dans le registre démo de MediMate. Cela ne prouve pas que le médicament est faux.',
         'Dis batch number no dey MediMate demo register. Dat one no mean say di medicine na fake.',
       ),
@@ -164,7 +164,7 @@ export function verifyPack(input: string | PackCode, now = new Date()): VerifyRe
       checks.push({
         id: 'expiry',
         status: 'pass',
-        title: t('In date', 'Non périmé', 'E never expire'),
+        title: t('Not expired', 'Non périmé', 'E never expire'),
         detail: { en: `Expires ${fmtDate(expiry)}.`, fr: `Expire en ${fmtDate(expiry, 'fr')}.`, pcm: `E go expire ${fmtDate(expiry)}.` },
       });
     }
@@ -172,7 +172,7 @@ export function verifyPack(input: string | PackCode, now = new Date()): VerifyRe
     checks.push({
       id: 'expiry',
       status: 'unknown',
-      title: t('Expiry date not read', 'Date de péremption non lue', 'We no read expiry date'),
+      title: t('Expiry date not found', 'Date de péremption introuvable', 'We no see expiry date'),
       detail: t('Check the EXP date printed on the pack yourself.', 'Vérifiez vous-même la date EXP imprimée sur la boîte.', 'Check di EXP date wey dem print for di pack by yourself.'),
     });
   }
@@ -183,7 +183,7 @@ export function verifyPack(input: string | PackCode, now = new Date()): VerifyRe
     checks.push({
       id: 'match',
       status: same ? 'pass' : 'fail',
-      title: same ? t('Barcode matches the batch', 'Le code-barres correspond au lot', 'Barcode match di batch') : t('Barcode does not match the batch', 'Le code-barres ne correspond pas au lot', 'Barcode no match di batch'),
+      title: same ? t('Box details match', 'Les infos de la boîte concordent', 'Box details match') : t('Box details don’t match', 'Les infos de la boîte ne concordent pas', 'Box details no match'),
       detail: same
         ? t('The product code and batch belong together.', 'Le code produit et le lot vont ensemble.', 'Di product code and di batch dey together.')
         : t(
@@ -200,7 +200,7 @@ export function verifyPack(input: string | PackCode, now = new Date()): VerifyRe
     checks.push({
       id: 'serial',
       status: seen ? 'fail' : 'pass',
-      title: seen ? t('Pack code copied', 'Code de boîte copié', 'Pack code don copy') : t('Unique pack code', 'Code de boîte unique', 'Pack code unique'),
+      title: seen ? t('Same code found on many boxes', 'Même code sur beaucoup de boîtes', 'Di same code dey for plenty box') : t('This box has its own code', 'Cette boîte a son propre code', 'Dis box get e own code'),
       detail: seen
         ? {
             en: `This exact pack code has been checked ${seen} times in different places. Genuine packs have unique codes — this may be a photocopied pack.`,

@@ -3,6 +3,7 @@
 
 import { useSyncExternalStore } from 'react';
 import type { Course } from '../core/course';
+import type { CarePlan } from '../core/care';
 import type { Lang, StockLevel } from '../core/types';
 import type { Verdict } from '../core/verify';
 
@@ -65,13 +66,15 @@ export interface State {
   speechRate: number;
   reservations: Reservation[];
   plan: 'free' | 'pro';
+  care: CarePlan | null;
+  familyPlan: boolean;
 }
 
 const KEY = 'medimate.v2';
 
 const DEFAULTS: State = {
   lang: null,
-  theme: 'system',
+  theme: 'light',
   courses: [],
   stock: {},
   reports: [],
@@ -86,6 +89,8 @@ const DEFAULTS: State = {
   speechRate: 0.95,
   reservations: [],
   plan: 'free',
+  care: null,
+  familyPlan: false,
 };
 
 function load(): State {

@@ -8,7 +8,7 @@ var BASE = (process.env.FAPSHI_BASE_URL || "https://sandbox.fapshi.com").replace
 var USER = process.env.FAPSHI_API_USER;
 var KEY = process.env.FAPSHI_API_KEY;
 var DIRECT = process.env.FAPSHI_DIRECT_PAY === "1";
-var PRICES = { reservation: 500, subscription: 1e4 };
+var PRICES = { reservation: 500, subscription: 1e4, family: 1e3 };
 async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
   if (!USER || !KEY) return res.status(200).json({ demo: true });

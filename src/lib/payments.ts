@@ -10,7 +10,7 @@ export interface StartPayment {
   amount: number;
   phone: string;
   medium?: Medium;
-  purpose: 'reservation' | 'subscription';
+  purpose: 'reservation' | 'subscription' | 'family';
   externalId: string;
   message: string;
 }

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowUp, Cpu, Languages, Mic, MicOff, RotateCcw, ShieldCheck, Sparkles, WifiOff } from 'lucide-react';
+import { ArrowUp, Cpu, Languages, Mic, MicOff, RotateCcw, ShieldCheck, WifiOff } from 'lucide-react';
+import { LogoMark } from '../ui/Logo';
 import { answer as runEngine, mentionsMedicine, type Answer } from '../core/engine';
 import { pick, type Lang } from '../core/types';
 import { C, LANG_LABEL, t, useLang } from '../i18n';
@@ -289,9 +290,7 @@ function AssistantTurn({
   return (
     <div className="space-y-2.5">
       <div className="flex items-center gap-2 px-1 text-[11.5px] font-semibold text-muted">
-        <span className="brand-gradient grid size-5 place-items-center rounded-md text-white">
-          <Sparkles className="size-3" />
-        </span>
+        <LogoMark size={20} />
         MediMate
       </div>
       <AnswerCard answer={a} defaultLang={lang} latest={latest} />

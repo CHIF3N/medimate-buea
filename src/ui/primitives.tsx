@@ -27,7 +27,7 @@ const VARIANT: Record<Variant, string> = {
   danger: 'bg-danger-soft text-danger-ink border border-danger-line hover:brightness-95',
   emergency: 'bg-emergency text-white shadow-[0_10px_24px_-10px_rgb(180_20_27/0.9)] hover:brightness-110',
   safe: 'bg-safe text-white hover:brightness-105 shadow-[0_8px_20px_-10px_rgb(15_154_104/0.8)]',
-  inverse: 'bg-ink text-bg hover:opacity-90',
+  inverse: 'bg-brand-600 text-white hover:bg-brand-700',
 };
 
 const SIZE: Record<Size, string> = {
@@ -178,7 +178,7 @@ export function Chip({ active, children, onClick, icon: Icon }: { active?: boole
       onClick={() => (haptic(), onClick?.())}
       className={cx(
         'inline-flex h-9 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 text-[13px] font-medium transition active:scale-95',
-        active ? 'bg-ink text-bg' : 'bg-surface text-ink-2 ring-1 ring-line hover:bg-surface-2',
+        active ? 'bg-brand-600 text-white' : 'bg-surface text-ink-2 ring-1 ring-line hover:bg-surface-2',
       )}
     >
       {Icon && <Icon className="size-4" strokeWidth={2.2} />}

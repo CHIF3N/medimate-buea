@@ -202,7 +202,7 @@ export function LangSwitch({ value, onChange, inverted }: { value: Lang; onChang
           onClick={() => (haptic(), onChange(l))}
           className={cx(
             'h-6 rounded-full px-2 transition',
-            value === l ? (inverted ? 'bg-white text-emergency' : 'bg-ink text-bg') : inverted ? 'text-white/80' : 'text-muted',
+            value === l ? (inverted ? 'bg-white text-emergency' : 'bg-brand-600 text-white') : inverted ? 'text-white/80' : 'text-muted',
           )}
         >
           {LANG_LABEL[l].short}

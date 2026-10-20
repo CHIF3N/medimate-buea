@@ -25,7 +25,7 @@ export interface PayRequest {
   title: string;
   lines: { label: string; value: string }[];
   amount: number;
-  purpose: 'reservation' | 'subscription';
+  purpose: 'reservation' | 'subscription' | 'family';
   externalId: string;
   message: string;
   note?: ReactNode;
@@ -146,7 +146,7 @@ export default function PaySheet({
 
         {stage === 'waiting' && (
           <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col items-center gap-3 rounded-2xl bg-surface-2 p-5 text-center ring-1 ring-line">
-            <span className="relative grid size-16 place-items-center rounded-3xl bg-ink text-bg">
+            <span className="relative grid size-16 place-items-center rounded-3xl bg-brand-600 text-white">
               <span className="absolute inset-0 animate-pulse-ring rounded-3xl bg-brand-500/40" />
               <Smartphone className="relative size-7" />
             </span>

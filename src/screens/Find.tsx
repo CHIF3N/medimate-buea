@@ -21,7 +21,7 @@ import {
   type PartnerPharmacy,
 } from '../data/places';
 import type { StockLevel } from '../core/types';
-import { normalize } from '../core/text';
+import { searchMedicines } from '../core/search';
 import { C, t, useLang } from '../i18n';
 import { navigate, useLocation } from '../lib/router';
 import { relTime } from '../core/course';
@@ -38,7 +38,9 @@ const S = {
   eyebrow: t('Pharmacies in Buea', 'Pharmacies à Buea', 'Pharmacy for Buea'),
   title: t('Find', 'Trouver', 'Find'),
   accent: t('it in stock', 'en stock', 'where e dey'),
-  search: t('Which medicine?', 'Quel médicament ?', 'Which medicine?'),
+  search: t('Which medicine? Any spelling is fine', 'Quel médicament ? Même mal écrit', 'Which medicine? Any spelling fine'),
+  closest: t('Closest matches for', 'Résultats proches de', 'Wetin near'),
+  noMed: t('No match yet — try the name on the box, or ask a pharmacist.', 'Aucun résultat — essayez le nom sur la boîte ou demandez au pharmacien.', 'We no see am — try di name for di box, or ask pharmacist.'),
   openNow: t('Open now', 'Ouvert', 'Open now'),
   onDuty: t('On duty', 'De garde', 'Night duty'),
   inStock: t('In stock', 'En stock', 'E dey'),
@@ -181,9 +183,7 @@ export default function FindScreen() {
     );
   };
 
-  const results = search
-    ? STOCKED_MEDS.filter((m) => [m.name, m.generic, ...m.brands, ...m.aliases].some((x) => normalize(x).includes(normalize(search))))
-    : STOCKED_MEDS;
+  const hits = searchMedicines(search, STOCKED_MEDS).slice(0, 8);
 
   const pickMed = (id: string | null) => {
     haptic();
@@ -278,15 +278,24 @@ export default function FindScreen() {
           )}
           {searching && (
             <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="absolute inset-x-0 top-[62px] z-30 max-h-[300px] overflow-y-auto rounded-[20px] bg-surface p-1.5 shadow-float ring-1 ring-line">
-              {results.map((m) => (
+              {search && hits[0]?.fuzzy && (
+                <p className="px-3 pb-1 pt-2 text-[12px] text-muted">
+                  {L(S.closest)} <b className="text-ink">“{search}”</b>
+                </p>
+              )}
+              {hits.map(({ med: m, via, fuzzy }) => (
                 <button key={m.id} onClick={() => pickMed(m.id)} className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left hover:bg-surface-2">
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[14.5px] font-semibold text-ink">{m.name}</span>
-                    <span className="block truncate text-[12px] text-muted">{[m.generic, ...m.brands].filter((x, i, a) => a.indexOf(x) === i).slice(0, 3).join(' · ')}</span>
+                    <span className="block text-[14.5px] font-semibold text-ink">
+                      {m.name}
+                      {search && via.toLowerCase() !== m.name.toLowerCase() && !fuzzy && <span className="font-normal text-muted"> · {via}</span>}
+                    </span>
+                    <span className="block truncate text-[12px] text-muted">{L(m.category)}</span>
                   </span>
                   {m.rx && <span className="rounded-full bg-danger-soft px-2 py-0.5 text-[10px] font-semibold text-danger-ink">Rx</span>}
                 </button>
               ))}
+              {search && hits.length === 0 && <p className="px-3 py-4 text-center text-[13px] text-muted">{L(S.noMed)}</p>}
             </motion.div>
           )}
         </div>
@@ -495,7 +504,7 @@ export default function FindScreen() {
             )}
 
             <div className="grid grid-cols-2 gap-2">
-              <a href={directionsUrl(selectedPartner.pos)} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-ink text-[14px] font-semibold text-bg active:scale-[0.97]">
+              <a href={directionsUrl(selectedPartner.pos)} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-brand-600 text-[14px] font-semibold text-white active:scale-[0.97]">
                 <Navigation className="size-4" /> {L(S.directions)}
               </a>
               <button disabled title={L(S.callDemo)} className="inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-surface text-[14px] font-semibold text-muted ring-1 ring-line">
@@ -531,7 +540,7 @@ export default function FindScreen() {
             </p>
             <p className="text-[14px] text-ink-2">{selectedPlace.kind === 'pharmacy' ? L(S.osmNote) : L(S.facilitiesNote)}</p>
             <div className="grid grid-cols-2 gap-2">
-              <a href={directionsUrl(selectedPlace.pos)} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-ink text-[14px] font-semibold text-bg">
+              <a href={directionsUrl(selectedPlace.pos)} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-brand-600 text-[14px] font-semibold text-white">
                 <Navigation className="size-4" /> {L(S.directions)}
               </a>
               <a href={osmUrl(selectedPlace.osm)} target="_blank" rel="noreferrer" className="inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-surface text-[13px] font-semibold text-ink ring-1 ring-line">
@@ -575,7 +584,7 @@ function OpenBadge({ open, duty }: { open: boolean; duty: boolean }) {
   const { L } = useLang();
   if (duty)
     return (
-      <span className="inline-flex h-6 shrink-0 items-center gap-1 rounded-full bg-ink px-2.5 text-[11px] font-semibold text-bg">
+      <span className="inline-flex h-6 shrink-0 items-center gap-1 rounded-full bg-brand-600 px-2.5 text-[11px] font-semibold text-white">
         <Moon className="size-3" /> {L(S.onDuty)}
       </span>
     );

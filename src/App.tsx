@@ -1,6 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowRight, CloudOff, Home, MapPin, Pill, ScanLine, Settings2, Siren, Sparkles, Terminal, type LucideIcon } from 'lucide-react';
+import { ArrowRight, CloudOff, Home, MapPin, MessageCircle, MessageCircleQuestion, Pill, ScanLine, Settings2, Siren, Terminal, type LucideIcon } from 'lucide-react';
 import { navigate, tabOf, useLocation, type Tab } from './lib/router';
 import { useStore } from './state/store';
 import { C, LANG_LABEL, t, useLang } from './i18n';
@@ -37,7 +37,7 @@ export default function App() {
   useEffect(() => {
     const dark = theme === 'dark' || (theme === 'system' && systemDark);
     document.documentElement.classList.toggle('dark', dark);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0b0c10' : '#f5f4f0');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0b0c10' : '#f8f7ff');
   }, [theme, systemDark]);
 
   useEffect(() => {
@@ -125,7 +125,7 @@ function Showcase({ children }: { children: ReactNode }) {
               onClick={() => navigate(`/ask?q=${encodeURIComponent(q)}`)}
               className="group inline-flex items-center gap-2 rounded-full bg-surface px-4 py-2 text-left text-[14px] text-ink-2 ring-1 ring-line transition hover:bg-surface-2 hover:text-ink"
             >
-              <Sparkles className="size-4 text-brand-500 transition group-hover:rotate-12" />“{q}”
+              <MessageCircle className="size-4 shrink-0 text-brand-500" />“{q}”
             </button>
           ))}
         </div>
@@ -136,7 +136,7 @@ function Showcase({ children }: { children: ReactNode }) {
       </aside>
 
       <div className="relative z-10 py-6">
-        <div className="relative h-[min(860px,calc(100dvh-48px))] w-[396px] rounded-[56px] bg-[#0b0c10] p-[11px] shadow-[0_50px_100px_-30px_rgb(20_14_60/0.55),0_0_0_1px_rgb(255_255_255/0.06)_inset]">
+        <div className="relative h-[min(860px,calc(100dvh-48px))] w-[396px] rounded-[56px] bg-[#231c4d] p-[11px] shadow-[0_50px_100px_-30px_rgb(20_14_60/0.55),0_0_0_1px_rgb(255_255_255/0.06)_inset]">
           <div className="absolute left-1/2 top-[19px] z-[70] h-[30px] w-[110px] -translate-x-1/2 rounded-full bg-black" />
           <div className="relative h-full w-full overflow-hidden rounded-[45px] bg-bg">
             <StatusBar />
@@ -154,16 +154,16 @@ function EngineConsole() {
   const [events, setEvents] = useState<EngineEvent[]>([]);
   useEffect(() => onDecision((e) => setEvents((list) => [e, ...list].slice(0, 4))), []);
   return (
-    <section className="relative z-10 hidden h-[min(860px,calc(100dvh-48px))] flex-col overflow-hidden rounded-[28px] bg-[#0b0c10] text-[12px] text-white/85 shadow-float ring-1 ring-white/10 2xl:flex">
-      <header className="flex items-center gap-2 border-b border-white/10 px-4 py-3 font-mono text-[11.5px] text-white/60">
+    <section className="relative z-10 hidden h-[min(860px,calc(100dvh-48px))] flex-col overflow-hidden rounded-[28px] bg-surface text-[12px] text-ink-2 shadow-float ring-1 ring-line 2xl:flex">
+      <header className="flex items-center gap-2 border-b border-line px-4 py-3 font-mono text-[11.5px] text-muted">
         <Terminal className="size-4" /> medimate-engine · live
-        <span className="ml-auto flex items-center gap-1.5 text-[#2ccf8f]">
-          <span className="size-1.5 animate-pulse rounded-full bg-[#2ccf8f]" /> on-device
+        <span className="ml-auto flex items-center gap-1.5 text-safe">
+          <span className="size-1.5 animate-pulse rounded-full bg-safe" /> on-device
         </span>
       </header>
       <div className="flex-1 space-y-3 overflow-y-auto p-4 font-mono">
         {events.length === 0 && (
-          <p className="leading-relaxed text-white/45">
+          <p className="leading-relaxed text-muted">
             {'// Ask the phone anything.'}
             <br />
             {'// Every decision streams here: language, medicines,'}
@@ -175,24 +175,24 @@ function EngineConsole() {
         )}
         <AnimatePresence initial={false}>
           {events.map((e) => (
-            <motion.div key={e.at} initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl bg-white/[0.04] p-3 ring-1 ring-white/[0.06]">
-              <p className="text-[#8c7cfb]">
-                {'>'} <span className="text-white">"{e.query.length > 90 ? `${e.query.slice(0, 90)}…` : e.query}"</span>
+            <motion.div key={e.at} initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl bg-surface-2 p-3 ring-1 ring-line">
+              <p className="text-brand-600">
+                {'>'} <span className="text-ink">"{e.query.length > 90 ? `${e.query.slice(0, 90)}…` : e.query}"</span>
               </p>
               {e.answer.trace.map((s, i) => (
                 <p key={i} className="mt-1 flex gap-2">
-                  <span className="w-[92px] shrink-0 text-white/40">{pick(s.label, 'en').toLowerCase()}</span>
-                  <span className={s.tone === 'bad' ? 'text-[#f05252]' : s.tone === 'warn' ? 'text-[#f5a524]' : s.tone === 'ok' ? 'text-[#2ccf8f]' : 'text-white/85'}>{pick(s.value, 'en')}</span>
+                  <span className="w-[92px] shrink-0 text-muted">{pick(s.label, 'en').toLowerCase()}</span>
+                  <span className={s.tone === 'bad' ? 'text-danger' : s.tone === 'warn' ? 'text-warn' : s.tone === 'ok' ? 'text-safe' : 'text-ink'}>{pick(s.value, 'en')}</span>
                 </p>
               ))}
               {e.answer.followUp && (
                 <p className="mt-1 flex gap-2">
-                  <span className="w-[92px] shrink-0 text-white/40">follow-up</span>
-                  <span className="text-[#8c7cfb]">{pick(e.answer.followUp.question, 'en')}</span>
+                  <span className="w-[92px] shrink-0 text-muted">follow-up</span>
+                  <span className="text-brand-600">{pick(e.answer.followUp.question, 'en')}</span>
                 </p>
               )}
-              <p className="mt-2 border-t border-white/10 pt-2 text-white/45">
-                level <span className="text-white">{e.answer.level}</span> · {e.answer.ms?.toFixed(2)} ms · 0 bytes sent
+              <p className="mt-2 border-t border-line pt-2 text-muted">
+                level <span className="text-ink">{e.answer.level}</span> · {e.answer.ms?.toFixed(2)} ms · 0 bytes sent
               </p>
             </motion.div>
           ))}
@@ -228,7 +228,7 @@ function StatusBar() {
 const TABS: { id: Tab; path: string; icon: LucideIcon }[] = [
   { id: 'home', path: '/', icon: Home },
   { id: 'find', path: '/find', icon: MapPin },
-  { id: 'ask', path: '/ask', icon: Sparkles },
+  { id: 'ask', path: '/ask', icon: MessageCircleQuestion },
   { id: 'verify', path: '/verify', icon: ScanLine },
   { id: 'course', path: '/course', icon: Pill },
 ];
@@ -291,7 +291,7 @@ function PhoneApp() {
           <div className="relative flex h-full flex-col overflow-hidden bg-bg text-ink">
             <TopBar onEmergency={ui.openEmergency} onSettings={ui.openSettings} />
             {!online && (
-              <div className="flex shrink-0 items-center justify-center gap-2 bg-ink py-1.5 text-[12px] font-medium text-bg">
+              <div className="flex shrink-0 items-center justify-center gap-2 bg-warn py-1.5 text-[12px] font-semibold text-white">
                 <CloudOff className="size-3.5" /> {L(C.offline)}
               </div>
             )}

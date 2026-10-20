@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, BadgeCheck, ChevronRight, Download, MapPin, Mic, Moon, Phone, Pill, ScanLine, Siren, Smartphone, Sparkles, Store, type LucideIcon } from 'lucide-react';
+import { ArrowRight, BadgeCheck, ChevronRight, Download, MapPin, MessageCircleQuestion, Mic, Moon, Phone, Pill, ScanLine, Siren, Smartphone, Store, type LucideIcon } from 'lucide-react';
 import { navigate } from '../lib/router';
 import { C, t, useLang } from '../i18n';
 import { setState, useStore } from '../state/store';
@@ -118,10 +118,10 @@ export default function HomeScreen() {
       <section>
         <SectionTitle>{L(S.actions)}</SectionTitle>
         <div className="grid grid-cols-2 gap-3">
-          <ActionTile icon={Sparkles} title={L(S.askT)} desc={L(S.askD)} onClick={() => navigate('/ask')} featured />
-          <ActionTile icon={MapPin} title={L(S.findT)} desc={L(S.findD)} onClick={() => navigate('/find')} />
-          <ActionTile icon={ScanLine} title={L(S.verifyT)} desc={L(S.verifyD)} onClick={() => navigate('/verify')} />
-          <ActionTile icon={Pill} title={L(S.courseT)} desc={L(S.courseD)} onClick={() => navigate('/course')} />
+          <ActionTile icon={MessageCircleQuestion} title={L(S.askT)} desc={L(S.askD)} onClick={() => navigate('/ask')} featured />
+          <ActionTile icon={MapPin} title={L(S.findT)} desc={L(S.findD)} onClick={() => navigate('/find')} tint="sky" />
+          <ActionTile icon={ScanLine} title={L(S.verifyT)} desc={L(S.verifyD)} onClick={() => navigate('/verify')} tint="pink" />
+          <ActionTile icon={Pill} title={L(S.courseT)} desc={L(S.courseD)} onClick={() => navigate('/course')} tint="lilac" />
         </div>
       </section>
 
@@ -224,7 +224,7 @@ function AskBar({ examples, label }: { examples: string[]; label: string }) {
       className="group relative flex w-full items-center gap-3 overflow-hidden rounded-[22px] bg-surface p-2 pl-4 text-left shadow-card ring-1 ring-line transition active:scale-[0.99]"
       aria-label={label}
     >
-      <Sparkles className="size-5 shrink-0 text-brand-500" />
+      <MessageCircleQuestion className="size-5 shrink-0 text-brand-500" />
       <span className="min-w-0 flex-1 py-2.5">
         <span className="block truncate text-[15px] text-ink-2">
           {shown}
@@ -241,16 +241,22 @@ function AskBar({ examples, label }: { examples: string[]; label: string }) {
   );
 }
 
-function ActionTile({ icon: Icon, title, desc, onClick, featured }: { icon: LucideIcon; title: string; desc: string; onClick: () => void; featured?: boolean }) {
+const TINT = {
+  sky: { tile: 'bg-[#e8f3ff] ring-[#cfe4fb] dark:bg-sky-500/10 dark:ring-sky-500/20', icon: 'bg-white text-[#1d6fd1] dark:bg-sky-500/20 dark:text-sky-200' },
+  pink: { tile: 'bg-[#fdedf5] ring-[#f6d3e5] dark:bg-pink-500/10 dark:ring-pink-500/20', icon: 'bg-white text-[#c2367f] dark:bg-pink-500/20 dark:text-pink-200' },
+  lilac: { tile: 'bg-[#f1eeff] ring-[#e0daff] dark:bg-brand-500/10 dark:ring-brand-500/20', icon: 'bg-white text-brand-600 dark:bg-brand-500/20 dark:text-brand-200' },
+};
+
+function ActionTile({ icon: Icon, title, desc, onClick, featured, tint = 'lilac' }: { icon: LucideIcon; title: string; desc: string; onClick: () => void; featured?: boolean; tint?: keyof typeof TINT }) {
   return (
     <button
       onClick={onClick}
       className={cx(
         'group relative overflow-hidden rounded-[22px] p-4 text-left ring-1 transition active:scale-[0.97]',
-        featured ? 'brand-gradient text-white ring-transparent shadow-[0_18px_40px_-20px_rgb(91_63_232/0.9)]' : 'bg-surface text-ink shadow-card ring-line',
+        featured ? 'brand-gradient text-white ring-transparent shadow-[0_18px_40px_-20px_rgb(91_63_232/0.9)]' : cx('text-ink', TINT[tint].tile),
       )}
     >
-      <span className={cx('grid size-10 place-items-center rounded-2xl', featured ? 'bg-white/18 text-white' : 'bg-brand-50 text-brand-600 dark:bg-brand-500/15 dark:text-brand-300')}>
+      <span className={cx('grid size-10 place-items-center rounded-2xl', featured ? 'bg-white/20 text-white' : TINT[tint].icon)}>
         <Icon className="size-5" strokeWidth={2.2} />
       </span>
       <span className="mt-5 block text-[16px] font-semibold tracking-[-0.01em]">{title}</span>
@@ -330,7 +336,7 @@ function DutyPharmacy() {
     <Card onClick={() => navigate(`/find?focus=${p.id}`)} className="relative overflow-hidden p-4">
       <div className="pointer-events-none absolute -right-10 -top-10 size-36 rounded-full bg-brand-400/15 blur-2xl" />
       <div className="flex items-center gap-3.5">
-        <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-ink text-bg">
+        <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-brand-100 text-brand-700 dark:bg-brand-500/20 dark:text-brand-200">
           <Moon className="size-5" />
         </span>
         <span className="min-w-0 flex-1">

@@ -14,7 +14,7 @@ const KEY = process.env.FAPSHI_API_KEY;
 const DIRECT = process.env.FAPSHI_DIRECT_PAY === '1';
 
 /** Server-side price list: the browser cannot choose what it pays. */
-const PRICES: Record<string, number> = { reservation: 500, subscription: 10000 };
+const PRICES: Record<string, number> = { reservation: 500, subscription: 10000, family: 1000 };
 
 export default async function handler(req: Req, res: Res) {
   res.setHeader('Cache-Control', 'no-store');

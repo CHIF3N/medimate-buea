@@ -1016,7 +1016,7 @@ function verifyPack(input, now = /* @__PURE__ */ new Date()) {
     checks.push({
       id: "registry",
       status: "fail",
-      title: t2("Batch is on an alert list", "Lot sous alerte", "Dis batch dey for alert list"),
+      title: t2("Fake boxes with this code were reported", "Des faux avec ce code ont \xE9t\xE9 signal\xE9s", "People don report fake box wey get dis code"),
       detail: t2(
         "Falsified packs carrying this batch number were reported (demo alert). Genuine stock from this batch was withdrawn.",
         "Des bo\xEEtes falsifi\xE9es portant ce num\xE9ro de lot ont \xE9t\xE9 signal\xE9es (alerte d\xE9mo). Le stock authentique a \xE9t\xE9 retir\xE9.",
@@ -1027,16 +1027,16 @@ function verifyPack(input, now = /* @__PURE__ */ new Date()) {
     checks.push({
       id: "registry",
       status: "pass",
-      title: t2("Found in the registry", "Trouv\xE9 dans le registre", "E dey inside register"),
+      title: t2("Matches the maker\u2019s records", "Conforme aux registres du fabricant", "E match di maker record"),
       detail: { en: `${record.product} \xB7 ${record.pack} \xB7 ${record.maker}` }
     });
   } else {
     checks.push({
       id: "registry",
       status: "unknown",
-      title: t2("Batch not found", "Lot introuvable", "We no see dis batch"),
+      title: t2("Not in our records", "Absent de nos registres", "E no dey our record"),
       detail: t2(
-        "This batch number is not in the MediMate demo registry. That does not prove the medicine is fake.",
+        "We don\u2019t have this box in our (demo) records yet. That does not prove the medicine is fake.",
         "Ce num\xE9ro de lot n\u2019est pas dans le registre d\xE9mo de MediMate. Cela ne prouve pas que le m\xE9dicament est faux.",
         "Dis batch number no dey MediMate demo register. Dat one no mean say di medicine na fake."
       )
@@ -1062,7 +1062,7 @@ function verifyPack(input, now = /* @__PURE__ */ new Date()) {
       checks.push({
         id: "expiry",
         status: "pass",
-        title: t2("In date", "Non p\xE9rim\xE9", "E never expire"),
+        title: t2("Not expired", "Non p\xE9rim\xE9", "E never expire"),
         detail: { en: `Expires ${fmtDate(expiry)}.`, fr: `Expire en ${fmtDate(expiry, "fr")}.`, pcm: `E go expire ${fmtDate(expiry)}.` }
       });
     }
@@ -1070,7 +1070,7 @@ function verifyPack(input, now = /* @__PURE__ */ new Date()) {
     checks.push({
       id: "expiry",
       status: "unknown",
-      title: t2("Expiry date not read", "Date de p\xE9remption non lue", "We no read expiry date"),
+      title: t2("Expiry date not found", "Date de p\xE9remption introuvable", "We no see expiry date"),
       detail: t2("Check the EXP date printed on the pack yourself.", "V\xE9rifiez vous-m\xEAme la date EXP imprim\xE9e sur la bo\xEEte.", "Check di EXP date wey dem print for di pack by yourself.")
     });
   }
@@ -1079,7 +1079,7 @@ function verifyPack(input, now = /* @__PURE__ */ new Date()) {
     checks.push({
       id: "match",
       status: same ? "pass" : "fail",
-      title: same ? t2("Barcode matches the batch", "Le code-barres correspond au lot", "Barcode match di batch") : t2("Barcode does not match the batch", "Le code-barres ne correspond pas au lot", "Barcode no match di batch"),
+      title: same ? t2("Box details match", "Les infos de la bo\xEEte concordent", "Box details match") : t2("Box details don\u2019t match", "Les infos de la bo\xEEte ne concordent pas", "Box details no match"),
       detail: same ? t2("The product code and batch belong together.", "Le code produit et le lot vont ensemble.", "Di product code and di batch dey together.") : t2(
         "This batch belongs to a different product. A real batch number printed on the wrong pack is a common sign of a fake.",
         "Ce lot appartient \xE0 un autre produit. Un vrai num\xE9ro de lot imprim\xE9 sur la mauvaise bo\xEEte est un signe fr\xE9quent de contrefa\xE7on.",
@@ -1092,7 +1092,7 @@ function verifyPack(input, now = /* @__PURE__ */ new Date()) {
     checks.push({
       id: "serial",
       status: seen ? "fail" : "pass",
-      title: seen ? t2("Pack code copied", "Code de bo\xEEte copi\xE9", "Pack code don copy") : t2("Unique pack code", "Code de bo\xEEte unique", "Pack code unique"),
+      title: seen ? t2("Same code found on many boxes", "M\xEAme code sur beaucoup de bo\xEEtes", "Di same code dey for plenty box") : t2("This box has its own code", "Cette bo\xEEte a son propre code", "Dis box get e own code"),
       detail: seen ? {
         en: `This exact pack code has been checked ${seen} times in different places. Genuine packs have unique codes \u2014 this may be a photocopied pack.`,
         fr: `Ce code exact a \xE9t\xE9 v\xE9rifi\xE9 ${seen} fois \xE0 diff\xE9rents endroits. Les vraies bo\xEEtes ont un code unique : il peut s\u2019agir d\u2019une copie.`,

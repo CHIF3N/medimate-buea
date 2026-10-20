@@ -15,7 +15,7 @@ export default defineConfig({
         short_name: 'MediMate',
         description: 'Safe medicine from purchase to the last dose. Ask in English, French or Pidgin, find stock, check packs, finish every course. Works offline.',
         theme_color: '#5b3fe8',
-        background_color: '#f5f4f0',
+        background_color: '#f8f7ff',
         display: 'standalone',
         orientation: 'portrait',
         start_url: '/',
